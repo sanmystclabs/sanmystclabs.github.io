@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs logo" width="240" />
+</p>
+
 # Sanmystc Labs — AI Consulting & Implementation
 
 A modern, responsive website for **Sanmystc Labs**, an AI strategy and implementation consulting firm. The site presents the firm's services, insights, and engagement model for business audiences.
