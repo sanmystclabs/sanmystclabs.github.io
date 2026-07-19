@@ -236,10 +236,10 @@
     <section id="inquiry-form" class="py-24">
       <div class="max-w-3xl mx-auto px-6">
         <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Tell Us About Your Goals</h2>
-        <form id="contactForm" class="mt-12 space-y-6">
+        <form id="contactForm" class="mt-12 space-y-6" data-script-url="https://script.google.com/macros/s/AKfycbx5dD4GtOdxfAme65K-9N_-egS22UzdGWiX8BPJtMHKnCYPhdNbH8WKBGlTKOETrtTa/exec">
           <div class="reveal">
             <label for="engagement" class="block text-sm font-medium text-slate-700">Preferred Engagement Type</label>
-            <select id="engagement" name="engagement" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            <select id="engagement" name="preferred engagement type" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
               <option value="">Select engagement type</option>
               <option value="strategy-call">Strategy Call</option>
               <option value="project">Project Submission</option>
@@ -268,7 +268,7 @@
           </div>
           <div class="reveal">
             <label for="organization-size" class="block text-sm font-medium text-slate-700">Organization Size</label>
-            <select id="organization-size" name="organization-size" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            <select id="organization-size" name="organization size" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
               <option value="">Select size</option>
               <option value="1-10">1-10 employees</option>
               <option value="11-50">11-50 employees</option>
@@ -279,7 +279,7 @@
           </div>
           <div class="reveal">
             <label for="objective" class="block text-sm font-medium text-slate-700">Primary Objective</label>
-            <select id="objective" name="objective" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            <select id="objective" name="primary objective" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
               <option value="">Select objective</option>
               <option value="strategy">AI Strategy & Roadmapping</option>
               <option value="assessment">AI Opportunity Assessment</option>
@@ -290,15 +290,15 @@
           </div>
           <div class="reveal">
             <label for="challenge" class="block text-sm font-medium text-slate-700">Current Challenge</label>
-            <textarea id="challenge" name="challenge" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+            <textarea id="challenge" name="current challenge" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
           </div>
           <div class="reveal">
             <label for="outcome" class="block text-sm font-medium text-slate-700">Desired Outcome</label>
-            <textarea id="outcome" name="outcome" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+            <textarea id="outcome" name="desired outcome" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
           </div>
           <div class="reveal">
             <label for="context" class="block text-sm font-medium text-slate-700">Additional Context</label>
-            <textarea id="context" name="context" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+            <textarea id="context" name="additional context" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
           </div>
           <div class="reveal">
             <button type="submit" class="w-full rounded-full bg-brand-900 px-6 py-3 text-white font-semibold hover:bg-brand-700 transition">Submit Inquiry</button>
@@ -400,14 +400,75 @@
 
 
     const form = document.getElementById('contactForm');
-    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+    if (form) {
+      const scriptURL = form.getAttribute('data-script-url') || window.GOOGLE_APPS_SCRIPT_URL || '';
+      const isConfigured = Boolean(scriptURL) && !scriptURL.includes('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL');
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => alert('Thank you! Your message was sent successfully.'))
-        .catch(error => console.error('Error!', error.message));
-    });
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const requiredFields = Array.from(form.querySelectorAll('input[required], select[required], textarea[required]'));
+        const missingFields = requiredFields.filter((field) => !String(field.value || '').trim());
+
+        if (missingFields.length) {
+          alert('Please complete the required fields before submitting.');
+          return;
+        }
+
+        if (!isConfigured) {
+          console.warn('Google Apps Script URL is not configured.');
+          alert('The form is ready, but the Google Sheets endpoint is not configured yet.');
+          return;
+        }
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton ? submitButton.textContent : '';
+
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Sending...';
+        }
+
+        try {
+          const response = await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            redirect: 'follow',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
+          });
+
+          let payload = null;
+          const contentType = response.headers.get('content-type') || '';
+
+          if (contentType.includes('application/json')) {
+            payload = await response.json();
+          } else {
+            payload = await response.text();
+          }
+
+          if (!response.ok) {
+            throw new Error(payload && typeof payload === 'object' && payload.error ? payload.error : `Request failed with status ${response.status}`);
+          }
+
+          if (payload && typeof payload === 'object' && payload.result && payload.result.toLowerCase() !== 'success') {
+            throw new Error(payload.error || 'The server did not confirm success.');
+          }
+
+          form.reset();
+          alert('Thank you! Your message was sent successfully.');
+        } catch (error) {
+          console.error('Error!', error);
+          alert('There was a problem submitting your inquiry. Please try again later.');
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+          }
+        }
+      });
+    }
 
     const params = new URLSearchParams(window.location.search);
     const engagement = params.get('engagement');
