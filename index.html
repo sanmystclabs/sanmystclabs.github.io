@@ -103,7 +103,10 @@
     <!-- Hero -->
     <section class="relative overflow-hidden md:min-h-[560px]" style="margin-top:0px; padding-bottom:62px; min-height:255px">
       <div class="absolute inset-0 img-wrapper" style="padding-top: 0px; box-sizing: border-box; height: 100%; min-height: 100%; max-height: none;">
-        <img src="./icons/home/home-banner-full.png" alt="Home" class="w-full h-full object-cover object-center" decoding="async" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+        <picture class="block h-full w-full">
+          <source media="(max-width: 767px)" srcset="./icons/home/enterprise.png" />
+          <img src="./icons/home/home-banner-full.png" alt="Home" class="w-full h-full object-cover object-center" decoding="async" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+        </picture>
       </div>
       <div class="relative z-10 flex items-center h-full">
         <div class="max-w-7xl mx-auto mt-[28px] px-6 w-full flex justify-start">
