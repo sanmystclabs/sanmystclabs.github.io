@@ -1,15 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=home.html">
-  <title>Sanmystc Labs</title>
-  <link rel="canonical" href="home.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanmystc Labs — Turning AI Possibilities Into Business Results</title>
+  <meta name="description" content="Helping businesses identify, design, and implement practical AI initiatives that create measurable business impact." />
   <link rel="icon" type="image/png" href="./icons/horizontal/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff4ff',
+              100: '#dbe6fe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#0c1e63',
+              950: '#08133d',
+            }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .gradient-bg {
+      background: radial-gradient(1200px 600px at 10% -20%, #dbe6fe 0%, transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, #eff4ff 0%, transparent 60%);
+    }
+    #partials-loading { display: none; }
+    .partial-error { padding: 1rem; background: #fee2e2; color: #991b1b; border-radius: 0.5rem; }
+    .img-wrapper { position: relative; overflow: hidden; background: #e2e8f0; }
+    .img-wrapper img { opacity: 0; transition: opacity 0.6s ease; }
+    .img-wrapper img.loaded { opacity: 1; }
+    .img-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s infinite;
+      pointer-events: none;
+    }
+    .img-wrapper.loaded::after { display: none; }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
 </head>
-<body>
-  <p>Redirecting to <a href="home.html">Sanmystc Labs</a>…</p>
-  <script>window.location.replace('home.html');</script>
+<body class="font-sans text-slate-900 bg-white antialiased">
+
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="./home.html" class="flex items-center gap-3">
+          <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="./home.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Home</a>
+          <a href="./about.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">About</a>
+          <a href="./services.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Services</a>
+          <!--<a href="./case_studies.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Case Studies</a>
+          -->
+          <a href="./insights.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Insights</a>
+          <a href="./contact.html" class="inline-flex items-center rounded-full bg-brand-900 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700 transition">Contact</a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 transition" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+      <nav class="mx-auto max-w-7xl px-6 py-4 space-y-3">
+        <a href="./home.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Home</a>
+        <a href="./about.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">About</a>
+        <a href="./services.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Services</a>
+        <a href="./case_studies.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Case Studies</a>
+        <a href="./insights.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Insights</a>
+        <a href="./contact.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="gradient-bg">
+    <!-- Hero -->
+    <section class="relative overflow-hidden" style="margin-top:0px; padding-bottom:130px; min-height:500px">
+      <div class="absolute inset-0 img-wrapper" style="padding-top: 0px; box-sizing: border-box; max-height:550px">
+        <img src="./icons/home/home-banner-full.png" alt="Home" class="w-full h-full object-cover" decoding="async" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+      </div>
+      <div class="relative z-10 flex items-center h-full">
+        <div class="max-w-7xl mx-auto mt-[70px] px-6 w-full flex justify-start">
+          <div class="max-w-3xl reveal" style="margin-left: 10px">
+            <h1 class="text-5xl md:text-6xl font-semibold tracking-tight text-black leading-[1.1]">
+              Turning AI Possibilities into Business Results
+            </h1>
+            <hr class="w-64 border-t-4 border-blue-500 mx-auto" style="margin: 20px 0 50px 0"/>
+            <p class="mt-6 text-lg md:text-xl leading-relaxed text-black/90 max-w-2xl">
+              Helping businesses identify, design and implement practical AI initiatives that improve efficiency, reduce costs and unlock new growth opportunities.
+            </p>
+            <div class="mt-10 flex flex-wrap gap-4">
+              <a href="contact.html?engagement=strategy-call#inquiry-form" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-blue-900 font-medium hover:bg-blue-900 hover:text-white transition-colors">
+                Book a Strategy Call
+              </a>
+              <a href="contact.html?engagement=project#inquiry-form" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-black font-medium hover:bg-black hover:text-white transition-colors">
+                Submit a Project
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenges -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid gap-8 md:grid-cols-2 items-stretch">
+          <div class="reveal">
+            <div class="img-wrapper rounded-2xl shadow-lg">
+              <img src="./icons/home/challenges.png" alt="Business challenges" class="rounded-2xl shadow-lg w-full object-cover h-[400px]" loading="lazy" decoding="async" width="800" height="400" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+          </div>
+          <div class="reveal">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 mb-6">
+              AI Is No Longer The Challenge.<br class="hidden md:block" /> Knowing Where To Start Is.
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="mb-3 flex h-16 w-full items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+                </div>
+                <p class="text-center text-sm font-semibold leading-snug text-slate-900">Too many AI tools and vendors</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="mb-3 flex h-16 w-full items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg>
+                </div>
+                <p class="text-center text-sm font-semibold leading-snug text-slate-900">No clear implementation roadmap</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="mb-3 flex h-16 w-full items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
+                </div>
+                <p class="text-center text-sm font-semibold leading-snug text-slate-900">Uncertainty around ROI</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="mb-3 flex h-16 w-full items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                </div>
+                <p class="text-center text-sm font-semibold leading-snug text-slate-900">Lack of internal AI expertise</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal">How We Help Organizations Succeed With AI</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <div class="reveal group rounded-2xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-brand-200 hover:shadow-md hover:scale-[1.03] hover:z-10">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/strategy.png" alt="Strategy" class="mb-6 h-32 w-full object-cover rounded-xl transition-all duration-300 group-hover:scale-105" loading="lazy" decoding="async" width="400" height="128" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-lg font-semibold text-brand-900">Strategy</h3>
+            <ul class="mt-4 space-y-2 text-slate-700">
+              <li>AI Opportunity Assessment</li>
+              <li>AI Strategy & Roadmapping</li>
+              <li>AI Transformation Planning</li>
+            </ul>
+          </div>
+          <div class="reveal group rounded-2xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-brand-200 hover:shadow-md hover:scale-[1.03] hover:z-10">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/implementation.png" alt="Implementation" class="mb-6 h-32 w-full object-cover rounded-xl transition-all duration-300 group-hover:scale-105" loading="lazy" decoding="async" width="400" height="128" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-lg font-semibold text-brand-900">Implementation</h3>
+            <ul class="mt-4 space-y-2 text-slate-700">
+              <li>Agentic Workflow Design</li>
+              <li>AI Solution Architecture</li>
+              <li>Business Process Automation</li>
+            </ul>
+          </div>
+          <div class="reveal group rounded-2xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-brand-200 hover:shadow-md hover:scale-[1.03] hover:z-10">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/enablement.png" alt="Enablement" class="mb-6 h-32 w-full object-cover rounded-xl transition-all duration-300 group-hover:scale-105" loading="lazy" decoding="async" width="400" height="128" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-lg font-semibold text-brand-900">Enablement</h3>
+            <ul class="mt-4 space-y-2 text-slate-700">
+              <li>Executive AI Workshops</li>
+              <li>Team Training Programs</li>
+              <li>AI Adoption Programs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who We Help -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal">Who We Help</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition hover:scale-105">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/smb.png" alt="Startup" class="mb-4 rounded-xl w-full h-48 object-cover" loading="lazy" decoding="async" width="400" height="192" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">SMB Owners</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Identify practical AI opportunities that improve efficiency and support growth.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition hover:scale-105">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/startup.png" alt="Startup" class="mb-4 rounded-xl w-full h-48 object-cover" loading="lazy" decoding="async" width="400" height="192" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">Startup Founders</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Accelerate execution and build scalable AI-enabled operating models.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition hover:scale-105">
+            <div class="img-wrapper rounded-xl">
+              <img src="./icons/home/enterprise.png" alt="Enterprise" class="mb-4 rounded-xl w-full h-48 object-cover" loading="lazy" decoding="async" width="400" height="192" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">Enterprise Executives</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Develop AI transformation strategies and implement high-impact initiatives.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact" class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="reveal rounded-3xl bg-brand-950 px-8 py-16 md:px-16 md:py-20 text-center text-white">
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Let's Identify Your Highest-Impact AI Opportunities</h2>
+          <p class="mt-4 text-brand-100 max-w-2xl mx-auto">Start with a focused strategy conversation and uncover practical opportunities for AI-driven growth.</p>
+          <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="contact.html?engagement=strategy-call#inquiry-form" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-brand-900 font-semibold hover:bg-brand-50 transition">Book a Strategy Call</a>
+            <a href="contact.html?engagement=project#inquiry-form" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-white font-medium hover:bg-white/10 transition">Submit a Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div class="md:col-span-2">
+           <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        <p class="mt-2 max-w-md text-sm text-slate-600 leading-relaxed">Turning AI Possibilities Into Business Results. Helping organizations identify, design, and implement practical AI initiatives.</p>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Navigate</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./" class="block hover:text-brand-700">Home</a>
+            <a href="./about.html" class="block hover:text-brand-700">About</a>
+            <a href="./services.html" class="block hover:text-brand-700">Services</a>
+            <a href="./case_studies.html" class="block hover:text-brand-700">Case Studies</a>
+          </nav>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Connect</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./insights.html" class="block hover:text-brand-700">Insights</a>
+            <a href="./contact.html" class="block hover:text-brand-700">Contact</a>
+          </nav>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-slate-200 pt-6 text-xs text-slate-500">© 2026 Sanmystc Labs. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    document.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    document.querySelectorAll('.img-wrapper img').forEach((img) => {
+      if (img.complete) {
+        img.classList.add('loaded');
+        img.parentElement.classList.add('loaded');
+      }
+    });
+  </script>
 </body>
 </html>
