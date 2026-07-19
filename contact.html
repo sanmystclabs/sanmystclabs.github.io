@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Sanmystc Labs</title>
+  <meta name="description" content="Start a conversation about your AI goals, challenges and opportunities. Book a strategy call or submit a project." />
+  <link rel="icon" type="image/png" href="./icons/horizontal/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff4ff',
+              100: '#dbe6fe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#0c1e63',
+              950: '#08133d',
+            }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .gradient-bg {
+      background: radial-gradient(1200px 600px at 10% -20%, #dbe6fe 0%, transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, #eff4ff 0%, transparent 60%);
+    }
+    #partials-loading { display: none; }
+    .partial-error { padding: 1rem; background: #fee2e2; color: #991b1b; border-radius: 0.5rem; }
+    .img-wrapper { position: relative; overflow: hidden; background: #e2e8f0; }
+    .img-wrapper img { opacity: 0; transition: opacity 0.6s ease; }
+    .img-wrapper img.loaded { opacity: 1; }
+    .img-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s infinite;
+      pointer-events: none;
+    }
+    .img-wrapper.loaded::after { display: none; }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-900 bg-white antialiased">
+
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="./home.html" class="flex items-center gap-3">
+          <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="./home.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Home</a>
+          <a href="./about.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">About</a>
+          <a href="./services.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Services</a>
+          <!--<a href="./case_studies.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Case Studies</a>
+          -->
+          <a href="./insights.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Insights</a>
+          <a href="./contact.html" class="inline-flex items-center rounded-full bg-brand-900 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700 transition">Contact</a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 transition" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+      <nav class="mx-auto max-w-7xl px-6 py-4 space-y-3">
+        <a href="./home.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Home</a>
+        <a href="./about.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">About</a>
+        <a href="./services.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Services</a>
+        <a href="./case_studies.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Case Studies</a>
+        <a href="./insights.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Insights</a>
+        <a href="./contact.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="gradient-bg">
+    <!-- Page Hero -->
+    <section class="relative overflow-hidden" style="padding-top:60px; padding-bottom:80px">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid gap-12 md:grid-cols-2 items-center">
+          <div class="max-w-3xl reveal">
+            <h1 class="text-5xl md:text-6xl font-semibold tracking-tight text-brand-900 leading-[1.1]">
+              Let's Explore What's Possible
+            </h1>
+            <hr class="w-64 border-t-4 border-blue-900 mx-auto" style="margin-top: 50px;margin-left:0px"/>
+            
+            <p class="mt-6 text-lg md:text-xl leading-relaxed text-slate-600 max-w-2xl">
+              Whether you're exploring AI opportunities, planning a transformation initiative or looking for implementation support, let's start with a conversation.
+            </p>
+          </div>
+          <div class="reveal hidden md:block">
+            <div class="img-wrapper rounded-2xl shadow-2xl">
+              <img src="./icons/contact/banner.png" alt="Contact" class="rounded-2xl shadow-2xl w-full object-cover h-[400px]" loading="lazy" decoding="async" width="800" height="400" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/70 to-transparent" aria-hidden="true" />
+    </section>
+
+    <!-- Who We Help -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Who We Typically Work With</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 text-center hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">SMB Owners</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Looking to improve efficiency and support growth through practical AI.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 text-center hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Startup Founders</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Accelerating execution and building scalable AI-enabled operating models.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 text-center hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Enterprise Executives</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Developing AI transformation strategies and implementing high-impact initiatives.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 text-center hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Transformation Leaders</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Driving organizational change and building AI capability across teams.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engagement Types -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Ways We Can Help</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-lg font-semibold text-brand-900">AI Strategy & Roadmapping</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Create a practical roadmap aligned with your business objectives and context.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-lg font-semibold text-brand-900">AI Opportunity Assessment</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Identify the highest-impact opportunities for AI within your organization.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-lg font-semibold text-brand-900">Agentic Workflow Design</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Design AI-powered workflows that improve productivity and decision-making.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-lg font-semibold text-brand-900">AI Transformation Planning</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Develop long-term plans for AI-driven business transformation.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-lg font-semibold text-brand-900">Executive Workshops</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Help leadership teams understand AI opportunities and risks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fit Check -->
+    <section class="py-24">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Before Reaching Out</h2>
+        <p class="mt-4 text-lg text-slate-600 reveal text-center">We work best with organizations that are ready to take action. Ask yourself:</p>
+        <div class="mt-8 space-y-4">
+          <div class="reveal flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+            <div class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-sm font-semibold">1</div>
+            <p class="text-slate-700 leading-relaxed">Are you exploring AI opportunities and need guidance on where to start?</p>
+          </div>
+          <div class="reveal flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+            <div class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-sm font-semibold">2</div>
+            <p class="text-slate-700 leading-relaxed">Do you need implementation guidance to turn strategy into action?</p>
+          </div>
+          <div class="reveal flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+            <div class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-sm font-semibold">3</div>
+            <p class="text-slate-700 leading-relaxed">Are you looking for executive alignment on AI priorities?</p>
+          </div>
+          <div class="reveal flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+            <div class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-sm font-semibold">4</div>
+            <p class="text-slate-700 leading-relaxed">Do you want to improve business outcomes using AI?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Options -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Choose Your Next Step</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <a href="?engagement=strategy-call#inquiry-form" class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-300 transition text-center">
+            <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">Book A Strategy Call</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Best for organizations seeking guidance and direction.</p>
+          </a>
+          <a href="?engagement=project#inquiry-form" class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-300 transition text-center">
+            <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">Submit A Project</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Best for organizations with a defined initiative.</p>
+          </a>
+          <a href="?engagement=workshop#inquiry-form" class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-300 transition text-center">
+            <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.617 50.617 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.718 50.718 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-900">Request A Workshop</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Best for leadership teams seeking alignment and education.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inquiry Form -->
+    <section id="inquiry-form" class="py-24">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Tell Us About Your Goals</h2>
+        <form id="contactForm" class="mt-12 space-y-6">
+          <div class="reveal">
+            <label for="engagement" class="block text-sm font-medium text-slate-700">Preferred Engagement Type</label>
+            <select id="engagement" name="engagement" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">Select engagement type</option>
+              <option value="strategy-call">Strategy Call</option>
+              <option value="project">Project Submission</option>
+              <option value="workshop">Workshop Request</option>
+            </select>
+          </div>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="reveal">
+              <label for="name" class="block text-sm font-medium text-slate-700">Name</label>
+              <input type="text" id="name" name="name" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500" />
+            </div>
+            <div class="reveal">
+              <label for="company" class="block text-sm font-medium text-slate-700">Company</label>
+              <input type="text" id="company" name="company" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500" />
+            </div>
+          </div>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="reveal">
+              <label for="role" class="block text-sm font-medium text-slate-700">Role</label>
+              <input type="text" id="role" name="role" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500" />
+            </div>
+            <div class="reveal">
+              <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
+              <input type="email" id="email" name="email" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500" />
+            </div>
+          </div>
+          <div class="reveal">
+            <label for="organization-size" class="block text-sm font-medium text-slate-700">Organization Size</label>
+            <select id="organization-size" name="organization-size" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">Select size</option>
+              <option value="1-10">1-10 employees</option>
+              <option value="11-50">11-50 employees</option>
+              <option value="51-200">51-200 employees</option>
+              <option value="201-500">201-500 employees</option>
+              <option value="500+">500+ employees</option>
+            </select>
+          </div>
+          <div class="reveal">
+            <label for="objective" class="block text-sm font-medium text-slate-700">Primary Objective</label>
+            <select id="objective" name="objective" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500">
+              <option value="">Select objective</option>
+              <option value="strategy">AI Strategy & Roadmapping</option>
+              <option value="assessment">AI Opportunity Assessment</option>
+              <option value="implementation">Implementation Support</option>
+              <option value="workshop">Executive Workshop</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="reveal">
+            <label for="challenge" class="block text-sm font-medium text-slate-700">Current Challenge</label>
+            <textarea id="challenge" name="challenge" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+          </div>
+          <div class="reveal">
+            <label for="outcome" class="block text-sm font-medium text-slate-700">Desired Outcome</label>
+            <textarea id="outcome" name="outcome" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+          </div>
+          <div class="reveal">
+            <label for="context" class="block text-sm font-medium text-slate-700">Additional Context</label>
+            <textarea id="context" name="context" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+          </div>
+          <div class="reveal">
+            <button type="submit" class="w-full rounded-full bg-brand-900 px-6 py-3 text-white font-semibold hover:bg-brand-700 transition">Submit Inquiry</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Response Expectations -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">What Happens Next</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-4">
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">01</div>
+            <div class="mt-2 font-medium text-slate-900">Initial Review</div>
+            <p class="mt-2 text-sm text-slate-600">We review your inquiry and assess fit.</p>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">02</div>
+            <div class="mt-2 font-medium text-slate-900">Qualification</div>
+            <p class="mt-2 text-sm text-slate-600">We confirm alignment and next steps.</p>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">03</div>
+            <div class="mt-2 font-medium text-slate-900">Strategy Conversation</div>
+            <p class="mt-2 text-sm text-slate-600">A focused discussion about your goals.</p>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">04</div>
+            <div class="mt-2 font-medium text-slate-900">Recommended Next Steps</div>
+            <p class="mt-2 text-sm text-slate-600">Clear recommendations tailored to you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="reveal rounded-3xl bg-brand-950 px-8 py-16 md:px-16 md:py-20 text-center text-white">
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Start The Conversation</h2>
+          <p class="mt-4 text-brand-100 max-w-2xl mx-auto">Every meaningful transformation begins with understanding the opportunity.</p>
+          <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="?engagement=strategy-call#inquiry-form" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-brand-900 font-semibold hover:bg-brand-50 transition">Book A Strategy Call</a>
+            <a href="?engagement=project#inquiry-form" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-white font-medium hover:bg-white/10 transition">Submit A Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div class="md:col-span-2">
+           <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        <p class="mt-2 max-w-md text-sm text-slate-600 leading-relaxed">Turning AI Possibilities Into Business Results. Helping organizations identify, design, and implement practical AI initiatives.</p>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Navigate</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./" class="block hover:text-brand-700">Home</a>
+            <a href="./about.html" class="block hover:text-brand-700">About</a>
+            <a href="./services.html" class="block hover:text-brand-700">Services</a>
+            <a href="./case_studies.html" class="block hover:text-brand-700">Case Studies</a>
+          </nav>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Connect</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./insights.html" class="block hover:text-brand-700">Insights</a>
+            <a href="./contact.html" class="block hover:text-brand-700">Contact</a>
+          </nav>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-slate-200 pt-6 text-xs text-slate-500">© 2026 Sanmystc Labs. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    document.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+
+
+    const form = document.getElementById('contactForm');
+    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => alert('Thank you! Your message was sent successfully.'))
+        .catch(error => console.error('Error!', error.message));
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const engagement = params.get('engagement');
+    if (engagement) {
+      const select = document.getElementById('engagement');
+      if (select) {
+        select.value = engagement;
+      }
+      const inquiryForm = document.getElementById('inquiry-form');
+      if (inquiryForm) {
+        setTimeout(() => inquiryForm.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
+
+    document.querySelectorAll('.img-wrapper img').forEach((img) => {
+      if (img.complete) {
+        img.classList.add('loaded');
+        img.parentElement.classList.add('loaded');
+      }
+    });
+  </script>
+</body>
+</html>

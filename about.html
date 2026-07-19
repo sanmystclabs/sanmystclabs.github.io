@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Sanmystc Labs</title>
+  <meta name="description" content="Learn about Sanjit's mission to bridge business strategy and AI implementation, and what makes Sanmystc Labs different." />
+  <link rel="icon" type="image/png" href="./icons/horizontal/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff4ff',
+              100: '#dbe6fe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#0c1e63',
+              950: '#08133d',
+            }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .gradient-bg {
+      background: radial-gradient(1200px 600px at 10% -20%, #dbe6fe 0%, transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, #eff4ff 0%, transparent 60%);
+    }
+    #partials-loading { display: none; }
+    .partial-error { padding: 1rem; background: #fee2e2; color: #991b1b; border-radius: 0.5rem; }
+    .img-wrapper { position: relative; overflow: hidden; background: #e2e8f0; }
+    .img-wrapper img { opacity: 0; transition: opacity 0.6s ease; }
+    .img-wrapper img.loaded { opacity: 1; }
+    .img-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s infinite;
+      pointer-events: none;
+    }
+    .img-wrapper.loaded::after { display: none; }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-900 bg-white antialiased">
+
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="./home.html" class="flex items-center gap-3">
+          <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="./home.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Home</a>
+          <a href="./about.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">About</a>
+          <a href="./services.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Services</a>
+          <!--<a href="./case_studies.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Case Studies</a>
+          -->
+          <a href="./insights.html" class="text-sm font-medium text-slate-700 hover:text-brand-700 transition">Insights</a>
+          <a href="./contact.html" class="inline-flex items-center rounded-full bg-brand-900 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700 transition">Contact</a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 transition" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+      <nav class="mx-auto max-w-7xl px-6 py-4 space-y-3">
+        <a href="./home.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Home</a>
+        <a href="./home.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">About</a>
+        <a href="./services.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Services</a>
+        <a href="./case_studies.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Case Studies</a>
+        <a href="./insights.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">Insights</a>
+        <a href="./contact.html" class="mobile-link block rounded-lg px-3 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="gradient-bg">
+    <!-- Page Hero -->
+    <section class="relative overflow-hidden" style="padding-top:60px; padding-bottom:80px">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid gap-12 md:grid-cols-2 items-center">
+          <div class="max-w-3xl reveal">
+            <h1 class="text-5xl md:text-6xl font-semibold tracking-tight text-brand-900 leading-[1.1]">
+              Bridging Business Strategy And AI Implementation
+            </h1>
+            <hr class="w-64 border-t-4 border-blue-700 mx-auto" style="margin-top: 20px;margin-left:0px"/>
+            <p class="mt-6 text-lg md:text-xl leading-relaxed text-slate-600 max-w-2xl">
+              Helping organizations move beyond AI experimentation and create measurable business outcomes through practical strategy, thoughtful design and effective execution.
+            </p>
+          </div>
+          <div class="reveal hidden md:block">
+            <div class="img-wrapper rounded-2xl shadow-2xl">
+              <img src="./icons/about/explainer.png" alt="Strategy and implementation" class="rounded-2xl shadow-2xl w-full object-cover h-[400px]" loading="lazy" decoding="async" width="800" height="400" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/70 to-transparent" aria-hidden="true" />
+    </section>
+
+    <!-- Personal Mission -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid gap-12 md:grid-cols-2 items-center">
+          <div class="reveal order-2 md:order-1">
+            <div class="img-wrapper rounded-2xl shadow-lg">
+              <img src="./icons/about/thinker.png" alt="Mission and purpose" class="rounded-2xl shadow-lg w-full object-cover h-[400px]" loading="lazy" decoding="async" width="800" height="400" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+          </div>
+          <div class="reveal order-1 md:order-2">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900">Why This Work Matters</h2>
+
+            <hr class="w-64 border-t-4 border-blue-700 mx-auto" style="margin-top: 20px;margin-left:0px"/>
+            
+            <p class="mt-6 text-lg text-slate-600 leading-relaxed">
+              AI transformation is not simply about introducing new technology. It is about helping organizations create measurable business outcomes through thoughtful strategy, practical implementation and sustainable adoption.
+            </p>
+            <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+              Most organizations struggle because they focus on technology before understanding their business goals. The result is wasted investment, low adoption and limited impact.
+            </p>
+            <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+              The objective is to help organizations move beyond AI experimentation and create real, lasting business value.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founder Story -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid gap-12 md:grid-cols-9 items-center">
+          <div class="reveal md:col-span-3">
+            <div class="img-wrapper rounded-2xl shadow-lg">
+              <img src="./icons/about/v-logo-w.png" alt="Sanjit" class="rounded-2xl shadow-lg w-full object-cover h-[250px]" loading="lazy" decoding="async" width="800" height="400" onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded');" />
+            </div>
+          </div>
+          <div class="reveal md:col-span-6">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900">Meet The Company</h2>
+            
+            <hr class="w-64 border-t-4 border-blue-700 mx-auto" style="margin-top: 20px;margin-left:0px"/>
+            
+            <p class="mt-6 text-lg text-slate-600 leading-relaxed">
+              Sanmystc Labs operates at the intersection of business strategy and AI implementation. With experience across industries, we help organizations identify high-impact opportunities, design practical solutions and build scalable Tech-enabled operating models.
+            </p>
+            <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+              We created Sanmystc Labs to serve as the execution platform that supports strategy and implementation initiatives, ensuring that recommendations translate into measurable results.
+            </p>
+            <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+              Our approach is grounded in business reality, not technology hype. We believe that successful AI initiatives require both strategic thinking and practical execution — and that the best solutions are those that people actually use.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">A Practical Approach To AI Adoption</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <div class="text-sm font-semibold text-brand-700 mb-3">01</div>
+            <h3 class="text-xl font-semibold text-slate-900">Start with business goals</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Every AI initiative should begin with a clear understanding of what the business is trying to achieve.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <div class="text-sm font-semibold text-brand-700 mb-3">02</div>
+            <h3 class="text-xl font-semibold text-slate-900">Prioritize measurable outcomes</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Focus on initiatives that create tangible business value and can be tracked over time.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <div class="text-sm font-semibold text-brand-700 mb-3">03</div>
+            <h3 class="text-xl font-semibold text-slate-900">Design for adoption</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Solutions must be practical, usable and aligned with how people actually work.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <div class="text-sm font-semibold text-brand-700 mb-3">04</div>
+            <h3 class="text-xl font-semibold text-slate-900">Build systems that scale</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Create architectures and processes that grow with the organization, not just pilot projects.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <div class="text-sm font-semibold text-brand-700 mb-3">05</div>
+            <h3 class="text-xl font-semibold text-slate-900">Measure impact continuously</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Track results, learn from outcomes and refine approaches based on real-world performance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Makes Us Different -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">What Makes Sanmystc Labs Different</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-2">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Business-first thinking</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Technology recommendations are grounded in business context, not vendor pitches or technical trends.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Strategy combined with implementation expertise</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We do not just advise — we help execute, ensuring that strategy translates into action.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Focus on practical outcomes</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Every engagement is designed to create measurable business impact, not just deliver reports or recommendations.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Independent technology recommendations</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We are not tied to any platform or vendor, so our advice is always aligned with your best interests.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition md:col-span-2 md:max-w-md md:mx-auto">
+            <h3 class="text-xl font-semibold text-slate-900">Long-term transformation mindset</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We build relationships, not transactions. Our goal is to help organizations build lasting AI capability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credentials -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Experience And Credentials</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-4 text-center">
+          <div class="reveal">
+            <div class="text-4xl font-semibold text-brand-900">12+</div>
+            <div class="mt-2 text-sm text-slate-600">Years of Experience</div>
+          </div>
+          <div class="reveal">
+            <div class="text-4xl font-semibold text-brand-900">60+</div>
+            <div class="mt-2 text-sm text-slate-600">Projects Delivered</div>
+          </div>
+          <div class="reveal">
+            <div class="text-4xl font-semibold text-brand-900">15+</div>
+            <div class="mt-2 text-sm text-slate-600">Industries Served</div>
+          </div>
+          <div class="reveal">
+            <div class="text-4xl font-semibold text-brand-900">200+</div>
+            <div class="mt-2 text-sm text-slate-600">Workshops Conducted</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 
+    Engagement Model
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">How We Work Together</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-5">
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">01</div>
+            <div class="mt-2 font-medium text-slate-900">Discovery Conversation</div>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">02</div>
+            <div class="mt-2 font-medium text-slate-900">Opportunity Assessment</div>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">03</div>
+            <div class="mt-2 font-medium text-slate-900">Strategy & Roadmap</div>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">04</div>
+            <div class="mt-2 font-medium text-slate-900">Implementation Support</div>
+          </div>
+          <div class="reveal text-center p-6 rounded-2xl border border-slate-200 bg-white">
+            <div class="text-sm font-semibold text-brand-700">05</div>
+            <div class="mt-2 font-medium text-slate-900">Measurement & Optimization</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <!-- Personal Values -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Principles That Guide Our Work</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Clarity Over Complexity</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We simplify complex AI concepts into clear, actionable strategies that everyone can understand and support.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Outcomes Over Hype</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We focus on measurable business results, not technology trends or buzzwords.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Practicality Over Trends</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We recommend solutions that are realistic, sustainable and aligned with your organization's capabilities.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-8 hover:border-brand-200 transition">
+            <h3 class="text-xl font-semibold text-slate-900">Partnership Over Transactions</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We build long-term relationships based on trust, transparency and shared success.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-brand-50/50">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-brand-900 reveal text-center">Frequently Asked Questions</h2>
+        <div class="mt-12 space-y-6">
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 class="text-lg font-semibold text-slate-900">What types of organizations do you work with?</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We work with SMB owners, startup founders, enterprise executives and transformation leaders who are ready to move beyond AI experimentation and create measurable business impact.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 class="text-lg font-semibold text-slate-900">Do you help with implementation?</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Yes. Sanmystc Labs serves as the execution platform, supporting strategy and implementation initiatives to ensure recommendations translate into real results.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 class="text-lg font-semibold text-slate-900">Do you provide workshops?</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Yes. We offer executive AI workshops, team training programs and AI adoption programs designed to build organizational capability and confidence.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 class="text-lg font-semibold text-slate-900">How do engagements typically begin?</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Most engagements start with a discovery conversation to understand your goals, challenges and opportunities. From there, we recommend the best path forward.</p>
+          </div>
+          <div class="reveal rounded-2xl border border-slate-200 bg-white p-6">
+            <h3 class="text-lg font-semibold text-slate-900">Can you work alongside internal teams?</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Absolutely. We often collaborate with internal teams, providing strategic guidance and implementation support while building internal capability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact" class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="reveal rounded-3xl bg-blue-950 px-8 py-16 md:px-16 md:py-20 text-center text-white">
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Let's Explore What's Possible</h2>
+          <p class="mt-4 text-brand-100 max-w-2xl mx-auto">Start with a focused conversation about your goals, challenges and opportunities.</p>
+          <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="contact.html?engagement=strategy-call#inquiry-form" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-brand-900 font-semibold hover:bg-brand-50 transition">Book a Strategy Call</a>
+            <a href="contact.html?engagement=project#inquiry-form" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-white font-medium hover:bg-white/10 transition">Submit a Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-12">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div class="md:col-span-2">
+           <img src="./icons/horizontal/logo-bg-white.png" alt="Sanmystc Labs" class="h-16 w-auto" />
+        <p class="mt-2 max-w-md text-sm text-slate-600 leading-relaxed">Turning AI Possibilities Into Business Results. Helping organizations identify, design, and implement practical AI initiatives.</p>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Navigate</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./" class="block hover:text-brand-700">Home</a>
+            <a href="./about.html" class="block hover:text-brand-700">About</a>
+            <a href="./services.html" class="block hover:text-brand-700">Services</a>
+            <a href="./case_studies.html" class="block hover:text-brand-700">Case Studies</a>
+          </nav>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-900">Connect</div>
+          <nav class="mt-3 space-y-2 text-sm text-slate-600">
+            <a href="./insights.html" class="block hover:text-brand-700">Insights</a>
+            <a href="./contact.html" class="block hover:text-brand-700">Contact</a>
+          </nav>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-slate-200 pt-6 text-xs text-slate-500">© 2026 Sanmystc Labs. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
+
+    document.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    document.querySelectorAll('.img-wrapper img').forEach((img) => {
+      if (img.complete) {
+        img.classList.add('loaded');
+        img.parentElement.classList.add('loaded');
+      }
+    });
+  </script>
+</body>
+</html>
